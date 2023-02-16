@@ -60,7 +60,6 @@ import RightArrow from 'images/svg/tools/black-right-arrow.svg'
 const PnlMarginCalculator = () => {
     const formik_ref = useRef(null)
     const form = formik_ref.current
-
     const [tab, setTab] = useState('Buy')
     const [sub_tab, setSubTab] = useState('Synthetic')
     // These additional states have been created to track the first output (levels)
@@ -126,17 +125,13 @@ const PnlMarginCalculator = () => {
                 </SectionSubtitle>
 
                 <Flex mt="80px" mb="40px" tablet={{ mt: '40px', mb: '24px' }}>
-                    <SwapTabSelector
-                        active={tab === 'Buy'}
-                        onClick={() => onTabClick('Buy')}
-                        id="pnl-margin-tab-selector"
-                    >
-                        <Text size="var(--text-size-m)" align="center" className="buy">
+                    <SwapTabSelector active={tab === 'Buy'} onClick={() => onTabClick('Buy')}>
+                        <Text size="var(--text-size-m)" align="center">
                             {localize('Buy')}
                         </Text>
                     </SwapTabSelector>
                     <SwapTabSelector active={tab === 'Sell'} onClick={() => onTabClick('Sell')}>
-                        <Text size="var(--text-size-m)" align="center" className="sell">
+                        <Text size="var(--text-size-m)" align="center">
                             {localize('Sell')}
                         </Text>
                     </SwapTabSelector>
@@ -267,14 +262,19 @@ const PnlMarginCalculator = () => {
                                     current_input.focus()
                                 }
 
-                                const AssetPriceInput = () => (
+                                const AssetPriceInput = <T extends object>({
+                                    field,
+                                }: {
+                                    field: T
+                                }) => (
                                     <Input
+                                        {...field}
                                         id="assetPrice"
                                         type="text"
                                         value={values.assetPrice}
                                         label={localize('Open price of asset')}
                                         autoComplete="off"
-                                        error={touched.assetPrice && errors.assetPrice.toString()}
+                                        error={touched.assetPrice && errors?.assetPrice?.toString()}
                                         onBlur={handleBlur}
                                         data-lpignore="true"
                                         handleError={(current_input) => {
@@ -288,8 +288,13 @@ const PnlMarginCalculator = () => {
                                     />
                                 )
 
-                                const StopLossAmountInput = () => (
+                                const StopLossAmountInput = <T extends object>({
+                                    field,
+                                }: {
+                                    field: T
+                                }) => (
                                     <Input
+                                        {...field}
                                         id="assetPrice"
                                         type="text"
                                         value={values.stopLossAmount}
@@ -297,7 +302,7 @@ const PnlMarginCalculator = () => {
                                         autoComplete="off"
                                         error={
                                             touched.stopLossAmount &&
-                                            errors.stopLossAmount.toString()
+                                            errors?.stopLossAmount?.toString()
                                         }
                                         onBlur={handleBlur}
                                         data-lpignore="true"
@@ -307,13 +312,18 @@ const PnlMarginCalculator = () => {
                                     />
                                 )
 
-                                const PointValueInput = () => (
+                                const PointValueInput = <T extends object>({
+                                    field,
+                                }: {
+                                    field: T
+                                }) => (
                                     <Input
+                                        {...field}
                                         id="pointValue"
                                         type="text"
                                         label={localize('Point value')}
                                         autoComplete="off"
-                                        error={touched.pointValue && errors.pointValue.toString()}
+                                        error={touched.pointValue && errors?.pointValue?.toString()}
                                         onBlur={handleBlur}
                                         data-lpignore="true"
                                         handleError={(current_input) => {
@@ -335,15 +345,20 @@ const PnlMarginCalculator = () => {
                                     setFieldValue('stopLossAmount', value)
                                 }
 
-                                const TakeProfitAmountInput = () => (
+                                const TakeProfitAmountInput = <T extends object>({
+                                    field,
+                                }: {
+                                    field: T
+                                }) => (
                                     <Input
+                                        {...field}
                                         id="takeProfitAmount"
                                         type="text"
                                         label={localize('Take profit amount')}
                                         autoComplete="off"
                                         error={
                                             touched.takeProfitAmount &&
-                                            errors.takeProfitAmount.toString()
+                                            errors?.takeProfitAmount?.toString()
                                         }
                                         onBlur={handleBlur}
                                         data-lpignore="true"
@@ -870,7 +885,7 @@ const PnlMarginCalculator = () => {
                                 )}
                             </Text>
 
-                            <Accordion id="pnl-for-margin" has_single_state>
+                            <Accordion has_single_state>
                                 <AccordionItem
                                     header={localize('Stop loss level')}
                                     header_style={header_style}
@@ -878,7 +893,6 @@ const PnlMarginCalculator = () => {
                                         padding: '0 0 24px 0',
                                     }}
                                     plus
-                                    class_name="take-profit"
                                 >
                                     <Desktop breakpoint={'tablet'}>
                                         <StopLoss />
@@ -901,7 +915,6 @@ const PnlMarginCalculator = () => {
                                     header={localize('Stop loss pip value')}
                                     header_style={header_style}
                                     plus
-                                    class_name="stop-loss"
                                 >
                                     <Desktop breakpoint={'tablet'}>
                                         <PipValue />
@@ -995,7 +1008,7 @@ const PnlMarginCalculator = () => {
                                 )}
                             </Text>
 
-                            <Accordion id="pnl-for-margin" has_single_state>
+                            <Accordion has_single_state>
                                 <AccordionItem
                                     header={localize('Take profit level')}
                                     header_style={header_style}
@@ -1003,7 +1016,6 @@ const PnlMarginCalculator = () => {
                                         padding: '0 0 24px 0',
                                     }}
                                     plus
-                                    class_name="take-profit"
                                 >
                                     <Desktop breakpoint={'tablet'}>
                                         <TakeProfitLevel />

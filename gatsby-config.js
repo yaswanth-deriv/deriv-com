@@ -58,7 +58,7 @@ module.exports = {
             resolve: `gatsby-plugin-canonical-urls`,
             options: {
                 siteUrl: `${site_url}`,
-                noQueryString: true,
+                stripQueryString: true,
             },
         },
         'gatsby-plugin-styled-components',

@@ -303,8 +303,8 @@ module.exports = {
                 policy: [
                     {
                         userAgent: '*',
+                        allow: '/',
                         disallow: [
-                            '/',
                             '/404/',
                             '/homepage/',
                             '/landing/',
